@@ -9,3 +9,9 @@
 + `Play`/`stop` music
 + `Poke` someone
 + `clear` chat
+
+#Installation instrutions
+
+> + `npm install`
+>  +++
+>  + `npm start`
