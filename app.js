@@ -47,7 +47,6 @@ io.on('connection',function(socket){
 		io.emit('setUsers',Users);
 	})
 	socket.on('disconnect',function(){
-		io.emit('stopped typing',Users[socket.id]);
 		delete Users[socket.id];
 		io.emit('setUsers',Users);
 	});
