@@ -10,7 +10,7 @@
 + `Poke` someone
 + `clear` chat
 
-#Installation instrutions
+# Installation instrutions
 
 > + `npm install`
 >  + `npm start`
