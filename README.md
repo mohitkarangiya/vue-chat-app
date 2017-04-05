@@ -6,6 +6,6 @@
 
 # Currently Implemeented features
 
-> Play/stop music
-> Poke someone
-> clear chat
++ `Play`/`stop` music
++ `Poke` someone
++ `clear` chat
