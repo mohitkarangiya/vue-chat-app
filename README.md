@@ -17,4 +17,4 @@ Try the app here - [http://qqli-chat-app.herokuapp.com/](http://qqli-chat-app.he
 > + `npm install`
 >  + `npm start`
 
-> Open browser of choice and open url [localhost:3000](localhost:3000)
+> Open browser of choice and open url [http://localhost:3000/](http://localhost:3000/)
