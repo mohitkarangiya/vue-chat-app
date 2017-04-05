@@ -15,11 +15,15 @@ var panidarang = new Howl({
 var playlist={'closer':closer,'notif':notif,'panidarang':panidarang};
 
 socket.on('play music',function(musicName){
-	playlist[musicName].play();
+	if(playlist[musicName]){
+		playlist[musicName].play();
+	}
 });
 
 socket.on('stop music',function(musicName){
-	playlist[musicName].stop();
+	if(playlist[musicName]){
+		playlist[musicName].stop();		
+	}
 });
 
 socket.on('msg',function(msg){
@@ -38,9 +42,6 @@ socket.on('poking',function(obj){
 	}
 });
 
-socket.on('stopped typing',function(userName){
-	app.typers.splice(app.typers.IndexOf(userName),1);
-})
 socket.on('setUsers',function(users){
 	app.users = users;
 });
@@ -56,37 +57,45 @@ var app = new Vue({
 		timeoutId:'',
 	},
 	methods:{
-		getUsername:function(event){
-			if(event.target.value!=""){
-				this.user = event.target.value;
+		getUsername:function(){
+			if(document.getElementById('nameInput').value!=""){
+				this.user = document.getElementById('nameInput').value;
 				this.newUser = false;
 				socket.emit('new user',this.user);
 			}
 		},
-		sendMsg:function(event){
-			if(event.target.value=="/clear"){
-				event.target.value="";
-				this.msg=""
+		sendMsg:function(){
+			var msgBox = document.getElementById('msgBox').value;
+			if(msgBox=="/clear"){
+				msgBox="";
+				this.msg="";
 				socket.emit('clear all');
-			}else if(event.target.value.split(" ")[0]=="/music"){
-				socket.emit('play music',event.target.value.split(" ")[1].toLowerCase());
-				event.target.value="";
-				this.msg=""
-			}else if(event.target.value=="/stop"){
+			}else if(msgBox.split(" ")[0]=="/music"){
+				socket.emit('play music',msgBox.split(" ")[1].toLowerCase());
+
+				if(playlist[msgBox.split(" ")[1].toLowerCase()]){
+					var obj = {user:this.user,msg:'Playing ' + msgBox.split(" ")[1]};
+					socket.emit('new msg',obj);
+					}
+
+				msgBox="";
+				this.msg="";
+			}else if(msgBox=="/stop"){
 				socket.emit('stop music');
-				event.target.value="";
-				this.msg=""
+				msgBox="";
+				this.msg="";
+				document.getElementById("bottom").scrollIntoView();
 			}
-			else if(event.target.value.split(" ")[0]=="/poke"){
-				socket.emit('poke',{from:this.user,to:event.target.value.split(" ")[1]});
-				event.target.value="";
-				this.msg=""
+			else if(msgBox.split(" ")[0]=="/poke"){
+				socket.emit('poke',{from:this.user,to:msgBox.split(" ")[1]});
+				msgBox="";
+				this.msg="";
 			}
-			else if(event.target.value!=""){
-				var obj = {user:this.user,msg:event.target.value};
+			else if(msgBox!=""){
+				var obj = {user:this.user,msg:msgBox};
 				socket.emit('new msg',obj);
-				event.target.value="";
-				this.msg=""
+				msgBox="";
+				this.msg="";
 				document.getElementById("bottom").scrollIntoView();
 			}
 		},
