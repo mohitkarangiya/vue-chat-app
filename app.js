@@ -8,7 +8,7 @@ var io = require('socket.io')(server);//attaching socket into the server
 
 var numofUsers=0;
 var Users={};
-
+var currMusic="";
 app.use(express.static('public'))
 
 app.get('/',function(req,res){
@@ -33,7 +33,15 @@ io.on('connection',function(socket){
 		Users[socket.id].typing=true;
 		io.emit('setUsers',Users);
 	})
-
+	socket.on('play music',function(musicName){
+		if(currMusic!=""){io.emit('stop music',currMusic);}//stop current music, if playing, and play new song
+		currMusic = musicName;
+		io.emit('play music',currMusic);
+	});
+	socket.on('stop music',function(){
+		io.emit('stop music',currMusic);
+		currMusic = "";
+	});
 	socket.on('stopped typing',function(userName){
 		Users[socket.id].typing=false;
 		io.emit('setUsers',Users);
