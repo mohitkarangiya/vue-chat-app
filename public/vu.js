@@ -1,11 +1,29 @@
 var socket = io();
 
-var sound = new Howl({
+var notif = new Howl({
 	      src: ['notif.mp3']
-	    });
+	  });
+
+var closer = new Howl({
+	      src: ['closer.mp3']
+	  });
+
+var panidarang = new Howl({
+	      src: ['panidarang.mp3']
+	  });
+
+var playlist={'closer':closer,'notif':notif,'panidarang':panidarang};
+
+socket.on('play music',function(musicName){
+	playlist[musicName].play();
+});
+
+socket.on('stop music',function(musicName){
+	playlist[musicName].stop();
+});
 
 socket.on('msg',function(msg){
-	sound.play();
+	playlist['notif'].play();
 	app.msgs.push(msg);	
 	document.getElementById("bottom").scrollIntoView();
 });
@@ -50,6 +68,14 @@ var app = new Vue({
 				event.target.value="";
 				this.msg=""
 				socket.emit('clear all');
+			}else if(event.target.value.split(" ")[0]=="/music"){
+				socket.emit('play music',event.target.value.split(" ")[1].toLowerCase());
+				event.target.value="";
+				this.msg=""
+			}else if(event.target.value=="/stop"){
+				socket.emit('stop music');
+				event.target.value="";
+				this.msg=""
 			}
 			else if(event.target.value.split(" ")[0]=="/poke"){
 				socket.emit('poke',{from:this.user,to:event.target.value.split(" ")[1]});
