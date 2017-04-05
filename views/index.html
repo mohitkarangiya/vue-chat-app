@@ -15,19 +15,21 @@
 <body>
 	<div id="chatApp">
 		<div v-if="newUser" class="ui container">
+		   	<h1 style="color:white" class="heading">Chat App</h1>
 	       	<div class="ui form">
-			   	<h1 style="color:white" class="heading">Chat App</h1>
 		       	<div class="field">
 			       	<div class="ui labeled input">
 			       		<div class="ui green label">
 				       		Name:
 				       	</div>
-				       	<input type="text" @keydown.enter="getUsername">
+				       	<input id="nameInput" type="text" @keydown.enter="getUsername">
+				       	<div class="ui button" type="submit" @click="getUsername">Go</div>
 			       	</div>
 		       	</div>
 	       	</div>
 	       	<div class="ui blue inverted segment" style="border-radius: 5px;margin-top: 20px">
 	       		<h2>Comands</h2>
+	       		<p> Following are the commands that you can enter in the chat</p>
 	       		<p> <div class="ui label">/clear</div> - clears chat </p>
 	       		<p> <div class="ui label">/poke username</div> - pokes the user </p>
 	       		<p> <div class="ui label">/music songname</div> - currently only two choices, 'closer' and 'panidarang'</p>
@@ -54,8 +56,14 @@
 					<div id='bottom' style="height:120px;width: 100%"></div>
 				</div>
 			</div>
-			<div class="ui massive form" style="width:100%; position:fixed; bottom:0;left:0"><input type="text" placeholder="type here..." id="msgbox" @keydown.enter.stop="sendMsg" v-model="msg">
-			</div>
+				<div class="ui large form" style="width:100%;position:fixed; bottom:0;left:0">
+					<div class="ui field">
+						<div class="ui input">
+							<input type="text" placeholder="type here..." id="msgBox" @keydown.enter.stop="sendMsg" v-model="msg">
+							<div class="ui large green button" @click="sendMsg" >Send</div>
+						</div>
+					</div>
+				</div>
 		</div>
 	</div>
 	</body>
