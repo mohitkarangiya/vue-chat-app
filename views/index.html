@@ -19,12 +19,18 @@
 			   	<h1 style="color:white" class="heading">Chat App</h1>
 		       	<div class="field">
 			       	<div class="ui labeled input">
-			       		<div class="ui teal label">
+			       		<div class="ui green label">
 				       		Name:
 				       	</div>
 				       	<input type="text" @keydown.enter="getUsername">
 			       	</div>
 		       	</div>
+	       	</div>
+	       	<div class="ui blue inverted segment" style="border-radius: 5px;margin-top: 20px">
+	       		<h2>Comands</h2>
+	       		<p> <div class="ui label">/clear</div> - clears chat </p>
+	       		<p> <div class="ui label">/poke username</div> - pokes the user </p>
+	       		<p> <div class="ui label">/music songname</div> - currently only two choices, 'closer' and 'panidarang'</p>
 	       	</div>
 		</div>
 		<!-- After loggedin -->
