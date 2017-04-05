@@ -13,5 +13,4 @@
 #Installation instrutions
 
 > + `npm install`
->  +++
 >  + `npm start`
